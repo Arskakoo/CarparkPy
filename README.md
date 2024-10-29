@@ -1,11 +1,23 @@
-# $${Carpark\color{blue}Py}$$
 
-## Installations
+![Logo](https://github.com/Arskakoo/CarparkPy/blob/main/image/Logo.png)
 
+
+# CarparkPy
+
+Vapaiden parkkipaikkojen automaattinen tunnistus.
+
+
+## Installation
+
+Install my-project with npm
+
+```bash
+    pip install opencv-python
 ```
-pip install opencv-python
-```
+    
+## Authors
 
-## PowerPoint
+- [@Arska](https://www.github.com/arskakoo)
+- [@Saow](https://www.github.com/saow)
 
-https://shorturl.at/oEK6C
+
