@@ -1,4 +1,4 @@
-# $${Carpark\color{lightblue}PY}$$
+# $${Carpark\color{blue}PY}$$
 
 ## Installations
 
