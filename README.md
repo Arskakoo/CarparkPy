@@ -1,12 +1,10 @@
-![Logo](https://github.com/Arskakoo/CarparkPy/blob/main/image/Logo.png)
+![Logo](https://github.com/Arskakoo/CarparkPy/blob/main/image/ReadmeLogo.png)
 
 # CarparkPy
 
 Vapaiden parkkipaikkojen automaattinen tunnistus.
 
 ## Installation
-
-Install my-project with npm
 
 ```
 pip install opencv-python
