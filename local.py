@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 import time
-from datetime import datetime  # Import the datetime module
+from datetime import datetime
+import os
 
 # Initialize webcam and background subtractor
 cap = cv2.VideoCapture(0)
@@ -22,6 +23,12 @@ detected_parking_spots = [
 # Parameters
 radius = 20
 motion_threshold = 50  # Tune this for sensitivity to motion
+motion_log_file = "motion_log.txt"
+
+# Ensure the log file exists
+if not os.path.exists(motion_log_file):
+    with open(motion_log_file, "w") as f:
+        f.write("Timestamp,Parking Spot,Occupied\n")
 
 def detect_motion(roi, threshold):
     """Detect motion in the given region of interest (ROI)."""
@@ -30,9 +37,12 @@ def detect_motion(roi, threshold):
 
 def draw_parking_spots(frame, spots, radius):
     """Draw circles around each parking spot, indicating motion detection."""
-    for x, y, movement_detected in spots:
+    for i, (x, y, movement_detected) in enumerate(spots):
         color = (0, 0, 255) if movement_detected else (0, 255, 0)  # Red if motion, else green
         cv2.circle(frame, (x, y), radius, color, 2)
+        # Display parking spot status
+        status = "Taken" if movement_detected else "Free"
+        cv2.putText(frame, f"Spot {i+1}: {status}", (x - 40, y + 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
 # Start time for FPS calculation
 start_time = time.time()
@@ -61,9 +71,15 @@ while cap.isOpened():
             continue
         
         # Update motion detection status
-        detected_parking_spots[i] = (x, y, detect_motion(roi, motion_threshold))
-    
-    # Draw circles on frame
+        movement_detected = detect_motion(roi, motion_threshold)
+        detected_parking_spots[i] = (x, y, movement_detected)
+
+        # Log motion events
+        if movement_detected:
+            with open(motion_log_file, "a") as f:
+                f.write(f"{datetime.now()},Spot {i + 1},Occupied\n")
+
+    # Draw circles and status on frame
     draw_parking_spots(frame, detected_parking_spots, radius)
 
     # Display FPS
@@ -73,7 +89,7 @@ while cap.isOpened():
     cv2.putText(frame, f"FPS: {fps:.2f}", (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
 
     # Get current time
-    current_time = datetime.now().strftime("%H:%M:%S")  # Format the current time
+    current_time = datetime.now().strftime("%H:%M:%S")
     cv2.putText(frame, f"Time: {current_time}", (20, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
 
     # Show the output frame
