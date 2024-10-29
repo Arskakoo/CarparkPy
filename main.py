@@ -1,7 +1,7 @@
 import cv2
 from matplotlib import pyplot as plt
 
-image_template = cv2.imread('image/image.jpg')
+image_template = cv2.imread('image/Example.jpg')
 
 height = 700
 width = 1080
