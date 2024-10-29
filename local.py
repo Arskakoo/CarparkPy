@@ -4,14 +4,18 @@ import numpy as np
 # Predefined parking spots
 detected_parking_spots = [
     # x, y, is_taken
-    (100, 685, True),  # vasemmalta oikealle 1
+    (30, 685, True),  # vasemmalta oikealle 1
+    (150, 685, True),  # vasemmalta oikealle 1
+    (250, 685, True),  # vasemmalta oikealle 2
+    (400, 685, True),  # vasemmalta oikealle 3
     (500, 685, True),  # oikealta vasemmalle 1
-    (620, 685, True),  # oikealta vasemmalle 6
-    (750, 685, True),  # oikealta vasemmalle 5
-    (895, 685, True),  # oikealta vasemmalle 4
-    (1050, 685, True),  # oikealta vasemmalle 3
-    (1190, 725, True),  # oikealta vasemmaalle 2
-    (1355, 730, False),  # oikealta vasemmalle 1
+    (620, 695, True),  # oikealta vasemmalle 6
+    (750, 735, True),  # oikealta vasemmalle 5
+    (895, 735, True),  # oikealta vasemmalle 4
+    (1050, 735, True),  # oikealta vasemmalle 3
+    (1190, 735, True),  # oikealta vasemmaalle 2
+    (1355, 735, False),  # oikealta vasemmalle 1
+    (1550, 735, False),  # oikealta vasemmalle 1
 ]
 
 # Function to process each frame
