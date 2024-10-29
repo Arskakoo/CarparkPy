@@ -14,6 +14,10 @@ pip install opencv-python
 pip install matplotlib
 ```
 
+```
+pip install flask
+```
+
 ## Authors
 
 - [@Arska](https://www.github.com/arskakoo)
