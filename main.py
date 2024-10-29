@@ -1,41 +1,28 @@
 import cv2
 import numpy as np
-from matplotlib import pyplot as plt
 
-# Image resize
-image_template = cv2.imread('image/Example.jpg')
 
-height = 900
-width = 1600
+image = cv2.imread('resized_image.jpg')  
+image_height, image_width = image.shape[:2]  
 
-# Resize the image
-resized_image = cv2.resize(image_template, (width, height)) 
-cv2.imwrite('resized_image.jpg', resized_image)
+box_size = 15
 
-# Parkslots draw
-image = cv2.imread('resized_image.jpg')
+def draw_box(event, x, y, flags, param):
+    if event == cv2.EVENT_LBUTTONDOWN:  
+        top_left = (x, y)
+        bottom_right = (x + box_size, y + box_size)
 
-# Convert to HSV color space
-hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        if bottom_right[0] <= image_width and bottom_right[1] <= image_height:
+            cv2.rectangle(image, top_left, bottom_right, (0, 0, 255), -1)  
+            cv2.imshow('Park', image)
 
-# Define HSV range for white color
-lower_white = np.array([0, 0, 200])  
-upper_white = np.array([180, 25, 255])  
-mask = cv2.inRange(hsv_image, lower_white, upper_white)
+cv2.namedWindow('Park')
+cv2.setMouseCallback('Park', draw_box)
 
-# Change masked white areas to red
-image[mask > 0] = [0, 0, 255]
+while True:
+    cv2.imshow('Park', image)
+    if cv2.waitKey(1) & 0xFF == 27:  
+        break
 
-# Find contours of the masked white areas
-contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-# Draw rectangles around detected contours
-for contour in contours:
-    if cv2.contourArea(contour) > 100:  # Only draw rectangles for significant areas
-        x, y, w, h = cv2.boundingRect(contour)
-        cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 3)  # Draw in blue
-
-# Show the modified image with rectangles
-cv2.imshow("Parkkipaikka ruutuineen", image)
-cv2.waitKey(0)  
 cv2.destroyAllWindows()
+6
